@@ -1,9 +1,11 @@
 #include <iostream>
+#include "BudgetApp.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    BudgetApp bugdetApp("Users.txt");
+
     return 0;
 }
