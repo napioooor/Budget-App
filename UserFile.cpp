@@ -1,7 +1,35 @@
 #include "UserFile.h"
 
 void UserFile::inputNewUserToFile(User user) {
-    string userDataLine = "";
+    CMarkup file;
+
+    if(file.Load(getFileName()) == true){
+        file.FindElem();
+        file.IntoElem();
+        file.AddElem("User");
+        file.IntoElem();
+        file.AddElem("ID", user.getId());
+        file.AddElem("Username", user.getUsername());
+        file.AddElem("Password", user.getPassword());
+        file.AddElem("Name", user.getName());
+        file.AddElem("Surname", user.getSurname());
+        file.OutOfElem();
+    }
+    else {
+        file.AddElem("Users");
+        file.IntoElem();
+        file.AddElem("User");
+        file.IntoElem();
+        file.AddElem("ID", user.getId());
+        file.AddElem("Username", user.getUsername());
+        file.AddElem("Password", user.getPassword());
+        file.AddElem("Name", user.getName());
+        file.AddElem("Surname", user.getSurname());
+        file.OutOfElem();
+    }
+
+    file.Save("users.xml");
+    /*string userDataLine = "";
     fstream textFile;
 
     textFile.open(getFileName().c_str(), ios::app);
@@ -16,22 +44,43 @@ void UserFile::inputNewUserToFile(User user) {
         }
     } else
         cout << "Nie udalo sie otworzyc pliku " << getFileName() << " i zapisac w nim danych." << endl;
-    textFile.close();
+    textFile.close();*/
 }
 
-string UserFile::changeUserDataToLineSeparetedWithVerticalLines(User user) {
+/*string UserFile::changeUserDataToLineSeparetedWithVerticalLines(User user) {
     string userDataLine = "";
 
     userDataLine += SupportMethods::convertIntToString(user.getId())+ '|';
     userDataLine += user.getUserName() + '|';
     userDataLine += user.getPassword() + '|';
     return userDataLine;
-}
+}*/
 
 vector <User> UserFile::loadUsersFromFile() {
-    User user;
     vector <User> users;
-    string userDataSeparetedWithVerticalLines = "";
+    User user;
+    CMarkup file;
+
+    file.Load(getFileName());
+    file.FindElem();
+    file.IntoElem();
+    while(file.FindElem("User")) {
+        file.IntoElem();
+        file.FindElem("ID");
+        user.setId(atoi( MCD_2PCSZ(file.GetData())));
+        file.FindElem("Username");
+        user.setUsername(file.GetData());
+        file.FindElem("Password");
+        user.setPassword(file.GetData());
+        file.FindElem("Name");
+        user.setName(file.GetData());
+        file.FindElem("Surname");
+        user.setSurname(file.GetData());
+        file.OutOfElem();
+        users.push_back(user);
+    }
+
+    /*string userDataSeparetedWithVerticalLines = "";
     fstream textFile;
 
     textFile.open(getFileName().c_str(), ios::in);
@@ -42,12 +91,12 @@ vector <User> UserFile::loadUsersFromFile() {
             users.push_back(user);
         }
     }
-    textFile.close();
+    textFile.close();*/
 
     return users;
 }
 
-User UserFile::getUserData(string userDataSeparetedWithVerticalLines) {
+/*User UserFile::getUserData(string userDataSeparetedWithVerticalLines) {
     User user;
     string singleUserData = "";
     int singleUserDataNumber = 1;
@@ -72,10 +121,27 @@ User UserFile::getUserData(string userDataSeparetedWithVerticalLines) {
         }
     }
     return user;
-}
+}*/
 
 void UserFile::saveAllUsersToFile(vector <User> &users) {
-    fstream textFile;
+    CMarkup file;
+
+    file.AddElem("Users");
+    file.IntoElem();
+
+    for (int number = 0; number < users.size(); number++) {
+        file.AddElem("User");
+        file.IntoElem();
+        file.AddElem("ID", users[number].getId());
+        file.AddElem("Username", users[number].getUsername());
+        file.AddElem("Password", users[number].getPassword());
+        file.AddElem("Name", users[number].getName());
+        file.AddElem("Surname", users[number].getSurname());
+        file.OutOfElem();
+    }
+
+    file.Save("users.xml");
+    /*fstream textFile;
     string userDataLine = "";
     vector <User>::iterator itrEnd = --users.end();
 
@@ -95,6 +161,6 @@ void UserFile::saveAllUsersToFile(vector <User> &users) {
     } else {
         cout << "Nie mozna otworzyc pliku " << getFileName() << endl;
     }
-    textFile.close();
+    textFile.close();*/
 }
 

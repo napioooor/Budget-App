@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    BudgetApp bugdetApp("Users.txt");
+    BudgetApp bugdetApp("users.xml");
 
     return 0;
 }

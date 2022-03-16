@@ -20,7 +20,7 @@ class UserMenager{
 
     User inputNewUserData();
     int getNewUserId();
-    bool doesUserNameExist(string userName);
+    bool doesUsernameExist(string userName);
 
 public:
     UserMenager(string userFileName, int id) : userFile(userFileName) {

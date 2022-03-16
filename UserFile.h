@@ -9,12 +9,13 @@
 #include "User.h"
 #include "SupportMethods.h"
 #include "TextFile.h"
+#include "Markup.h"
 
 using namespace std;
 
 class UserFile : public TextFile{
-    string changeUserDataToLineSeparetedWithVerticalLines(User user);
-    User getUserData(string userDataSeparetedWithVerticalLines);
+    //string changeUserDataToLineSeparetedWithVerticalLines(User user);
+    //User getUserData(string userDataSeparetedWithVerticalLines);
 
 public:
     UserFile(string userFileName) : TextFile(userFileName) {};

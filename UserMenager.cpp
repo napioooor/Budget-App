@@ -17,11 +17,17 @@ User UserMenager::inputNewUserData() {
 
     do {
         cout << "Podaj login: ";
-        user.setUserName(SupportMethods::inputLine());
-    } while (doesUserNameExist(user.getUserName()) == true);
+        user.setUsername(SupportMethods::inputLine());
+    } while (doesUsernameExist(user.getUsername()) == true);
 
     cout << "Podaj haslo: ";
     user.setPassword(SupportMethods::inputLine());
+
+    cout << "Podaj swoje imie: ";
+    user.setName(SupportMethods::changeFirstLetterIntoUppercaseRestLowercase(SupportMethods::inputLine()));
+
+    cout << "Podaj swoje nazwisko: ";
+    user.setSurname(SupportMethods::changeFirstLetterIntoUppercaseRestLowercase(SupportMethods::inputLine()));
 
     return user;
 }
@@ -33,9 +39,9 @@ int UserMenager::getNewUserId() {
         return users.back().getId() + 1;
 }
 
-bool UserMenager::doesUserNameExist(string userName) {
+bool UserMenager::doesUsernameExist(string userName) {
     for(int i = 0; i < users.size(); i++) {
-        if(users[i].getUserName() == userName) {
+        if(users[i].getUsername() == userName) {
             cout << endl << "Istnieje uzytkownik o takim loginie." << endl;
             return true;
         }
@@ -59,7 +65,7 @@ int UserMenager::userLogIn(){
 
     for(int i = 0; i < users.size(); i++)
     {
-        if (users[i].getUserName() == userName)
+        if (users[i].getUsername() == userName)
         {
             for (int numberOfTries = 3; numberOfTries > 0; numberOfTries--)
             {
