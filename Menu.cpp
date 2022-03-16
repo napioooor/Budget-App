@@ -28,29 +28,26 @@ void Menu::runMenu(UserMenager userMenager){
         }
         else
         {
-            //AdresatMenedzer adresatMenedzer("Adresaci.txt", userMenager.pobierzIdZalogowanegoUzytkownika());
+            BudgetMenager budgetMenager("incomes.xml", "expenses.xml", userMenager.getLoggedInUserId());
 
             choice = pickOptionFromUserMenu();
 
             switch (choice)
             {
             /*case '1':
-                adresatMenedzer.dodajAdresata();
+                budgetMenager.addIncome();
                 break;
             case '2':
-                adresatMenedzer.wyszukajAdresatowPoImieniu();
+                budgetMenager.addExpense();
                 break;
             case '3':
-                adresatMenedzer.wyszukajAdresatowPoNazwisku();
+                budgetMenager.outputThisMonthBudget();
                 break;
             case '4':
-                adresatMenedzer.wyswietlWszystkichAdresatow();
+                budgetMenager.outputLastMonthBudget();
                 break;
             case '5':
-                adresatMenedzer.usunAdresata();
-                break;
-            case '6':
-                adresatMenedzer.edytujAdresata();
+                budgetMenager.outputChosenPeriodBudget();
                 break;*/
             case '7':
                 userMenager.changeLoggedInUsersPassword();
@@ -85,12 +82,11 @@ char Menu::pickOptionFromUserMenu() {
     system("cls");
     cout << " >>> MENU UZYTKOWNIKA <<<" << endl;
     cout << "---------------------------" << endl;
-    cout << "1. Dodaj adresata" << endl;
-    cout << "2. Wyszukaj po imieniu" << endl;
-    cout << "3. Wyszukaj po nazwisku" << endl;
-    cout << "4. Wyswietl adresatow" << endl;
-    cout << "5. Usun adresata" << endl;
-    cout << "6. Edytuj adresata" << endl;
+    cout << "1. Dodaj przychod" << endl;
+    cout << "2. Dodaj wydatek" << endl;
+    cout << "3. Bilans z bierzacego miesiaca" << endl;
+    cout << "4. Bilans z poprzedniego miesiaca" << endl;
+    cout << "5. Bilans z wybranego okresu" << endl;
     cout << "---------------------------" << endl;
     cout << "7. Zmien haslo" << endl;
     cout << "8. Wyloguj sie" << endl;
