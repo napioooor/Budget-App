@@ -1,16 +1,13 @@
 #include "Menu.h"
 
-void Menu::runMenu(UserMenager userMenager){
+void Menu::runMenu(UserMenager userMenager) {
     char choice;
 
-    while (true)
-    {
-        if (userMenager.getLoggedInUserId() == 0)
-        {
+    while (true) {
+        if (userMenager.getLoggedInUserId() == 0) {
             choice = pickOptionFromMainMenu();
 
-            switch (choice)
-            {
+            switch (choice) {
             case '1':
                 userMenager.registerNewUser();
                 break;
@@ -25,22 +22,19 @@ void Menu::runMenu(UserMenager userMenager){
                 system("pause");
                 break;
             }
-        }
-        else
-        {
+        } else {
             BudgetMenager budgetMenager("incomes.xml", "expenses.xml", userMenager.getLoggedInUserId());
 
             choice = pickOptionFromUserMenu();
 
-            switch (choice)
-            {
-            /*case '1':
+            switch (choice) {
+            case '1':
                 budgetMenager.addIncome();
                 break;
             case '2':
                 budgetMenager.addExpense();
                 break;
-            case '3':
+            /*case '3':
                 budgetMenager.outputThisMonthBudget();
                 break;
             case '4':

@@ -8,7 +8,7 @@ using namespace std;
 class BudgetEntry{
     int incomeId, expenseId, userId;
     string item;
-    unsigned long long int date;
+    unsigned int date;
     double amount;
 
 public:
@@ -16,14 +16,14 @@ public:
     void setExpenseId(int newId);
     void setUserId(int newId);
     void setItem(string newItem);
-    void setDate(unsigned long long int newDate);
+    void setDate(int newDate);
     void setAmount(double newAmount);
 
     int getIncomeId();
     int getExpenseId();
     int getUserId();
     string getItem();
-    unsigned long long int getDate();
+    int getDate();
     double getAmount();
 };
 

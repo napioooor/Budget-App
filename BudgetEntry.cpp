@@ -16,7 +16,7 @@ void BudgetEntry::setItem(string newItem) {
     item = newItem;
 }
 
-void BudgetEntry::setDate(unsigned long long int newDate) {
+void BudgetEntry::setDate(int newDate) {
     date = newDate;
 }
 
@@ -40,7 +40,7 @@ string BudgetEntry::getItem() {
     return item;
 }
 
-unsigned long long int BudgetEntry::getDate() {
+int BudgetEntry::getDate() {
     return date;
 }
 

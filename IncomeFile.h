@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <cstdlib>
+#include <string.h>
 
 #include "BudgetEntry.h"
 #include "SupportMethods.h"
@@ -16,7 +17,8 @@ using namespace std;
 class IncomeFile : public TextFile{
 public:
     IncomeFile(string incomeFileName) : TextFile(incomeFileName) {};
-
+    void addIncomeToFile(BudgetEntry income);
+    int loadEntriesFromFile(vector <BudgetEntry> &incomes, int loggedInUserId);
 };
 
 #endif
