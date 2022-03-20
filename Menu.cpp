@@ -34,7 +34,7 @@ void Menu::runMenu(UserMenager userMenager) {
             case '2':
                 budgetMenager.addExpense();
                 break;
-            /*case '3':
+            case '3':
                 budgetMenager.outputThisMonthBudget();
                 break;
             case '4':
@@ -42,7 +42,7 @@ void Menu::runMenu(UserMenager userMenager) {
                 break;
             case '5':
                 budgetMenager.outputChosenPeriodBudget();
-                break;*/
+                break;
             case '7':
                 userMenager.changeLoggedInUsersPassword();
                 break;

@@ -30,6 +30,8 @@ class BudgetMenager{
 
     BudgetEntry getNewEntryData(int menuChoice);
     void loadBudgetEntriesFromFiles();
+    void sortBudgetEntries();
+    void outputBudget(int date1, int date2);
 public:
     BudgetMenager(string incomeFileName, string expenseFileName, int id)
     : incomeFile(incomeFileName), expenseFile(expenseFileName), LOGGED_IN_USER_ID(id) {
