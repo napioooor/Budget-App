@@ -14,9 +14,6 @@
 using namespace std;
 
 class UserFile : public TextFile{
-    //string changeUserDataToLineSeparetedWithVerticalLines(User user);
-    //User getUserData(string userDataSeparetedWithVerticalLines);
-
 public:
     UserFile(string userFileName) : TextFile(userFileName) {};
     void inputNewUserToFile(User user);

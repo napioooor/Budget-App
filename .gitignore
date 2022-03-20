@@ -1,4 +1,6 @@
 Budget App*
 bin/
 obj/
-Users.xml
+users.xml
+expenses.xml
+incomes.xml
