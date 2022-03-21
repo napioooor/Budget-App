@@ -11,12 +11,14 @@
 #include "BudgetEntry.h"
 #include "IncomeFile.h"
 #include "ExpenseFile.h"
+#include "DateMenager.h"
 
 using namespace std;
 
 class BudgetMenager{
     IncomeFile incomeFile;
     ExpenseFile expenseFile;
+    DateMenager dateMenager;
     const int LOGGED_IN_USER_ID;
     int lastExpenseId, lastIncomeId;
 
