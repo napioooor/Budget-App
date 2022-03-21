@@ -93,23 +93,25 @@ BudgetEntry BudgetMenager::getNewEntryData(int menuChoice) {
         cout << "Czy chcialbys dodac wpis z obecna data? [T/N]" << endl;
         char choice = SupportMethods::inputChar();
 
-        switch(choice) {
-        case 't':
-            date = SupportMethods::properCurrentDate();
+        choice = toupper(choice);
 
-            budgetEntry.setDate(SupportMethods::convertDateFromStringToInt(date));
+        switch(choice) {
+        case 'T':
+            date = dateMenager.properCurrentDate();
+
+            budgetEntry.setDate(dateMenager.convertDateFromStringToInt(date));
 
             break;
-        case 'n':
+        case 'N':
             cout << "Podaj date w formacie RRRR-MM-DD: " << endl;
             date = SupportMethods::inputLine();
 
-            if(SupportMethods::isDateCorrect(date) == false){
+            if(dateMenager.isDateCorrect(date) == false){
                 cout << "Podano niepoprawna date. Sproboj ponownie." << endl;
                 continue;
             }
 
-            budgetEntry.setDate(SupportMethods::convertDateFromStringToInt(date));
+            budgetEntry.setDate(dateMenager.convertDateFromStringToInt(date));
 
             break;
         default:
@@ -131,24 +133,37 @@ BudgetEntry BudgetMenager::getNewEntryData(int menuChoice) {
 void BudgetMenager::outputBudget(int date1, int date2){
     double sumIncomes = 0, sumExpenses = 0, difference = 0;
     sortBudgetEntries();
+    string date;
 
     cout.precision(2);
     cout.setf(ios::showpoint);
     cout.setf(ios::fixed);
 
+    cout << endl << "PRZYCHODY:" << endl;
+    cout << "----------------------" << endl;
+
     for(int i = 0; i < budgetEntries.size(); i++){
-        if(budgetEntries[i].getDate() > date1 && budgetEntries[i].getDate() < date2 && budgetEntries[i].getExpenseId() == 0){
-            cout << "+" << budgetEntries[i].getAmount() << " - " << budgetEntries[i].getItem() << endl;
+        if(budgetEntries[i].getDate() >= date1 && budgetEntries[i].getDate() <= date2 && budgetEntries[i].getExpenseId() == 0){
+            date = dateMenager.convertIntDateToString(budgetEntries[i].getDate());
+            cout << "+" << budgetEntries[i].getAmount() << " - " << budgetEntries[i].getItem() << " (" << date << ")" << endl;
             sumIncomes += budgetEntries[i].getAmount();
         }
     }
 
+
+    cout << "----------------------" << endl << endl;
+    cout << "WYDATKI:" << endl;
+    cout << "----------------------" << endl;
+
     for(int i = 0; i < budgetEntries.size(); i++){
-        if(budgetEntries[i].getDate() > date1 && budgetEntries[i].getDate() < date2 && budgetEntries[i].getIncomeId() == 0){
-            cout << "-" << budgetEntries[i].getAmount() << " - " << budgetEntries[i].getItem() << endl;
+        if(budgetEntries[i].getDate() >= date1 && budgetEntries[i].getDate() <= date2 && budgetEntries[i].getIncomeId() == 0){
+            date = dateMenager.convertIntDateToString(budgetEntries[i].getDate());
+            cout << "-" << budgetEntries[i].getAmount() << " - " << budgetEntries[i].getItem() << " (" << date << ")" << endl;
             sumExpenses -= budgetEntries[i].getAmount();
         }
     }
+
+    cout << "----------------------" << endl;
 
     difference = sumIncomes + sumExpenses;
 
@@ -167,7 +182,7 @@ void BudgetMenager::outputThisMonthBudget() {
     system("cls");
     cout << "BUDZET TEGO MIESIACA:" << endl << endl;
 
-    date = SupportMethods::convertDateFromStringToInt(SupportMethods::properCurrentDate());
+    date = dateMenager.convertDateFromStringToInt(dateMenager.properCurrentDate());
 
     date = date / 100 * 100;
 
@@ -182,7 +197,7 @@ void BudgetMenager::outputLastMonthBudget() {
     system("cls");
     cout << "BUDZET ZESZLEGO MIESIACA:" << endl << endl;
 
-    date = SupportMethods::convertDateFromStringToInt(SupportMethods::properCurrentDate());
+    date = dateMenager.convertDateFromStringToInt(dateMenager.properCurrentDate());
 
     date = date / 100 * 100;
 
@@ -199,25 +214,30 @@ void BudgetMenager::outputChosenPeriodBudget() {
     cout << "Podaj od jakiej daty ma byc wyswietlony bilans: (RRRR-MM-DD)" << endl;
     sdate1 = SupportMethods::inputLine();
 
-    if(SupportMethods::isDateCorrect(sdate1) == false) {
+    if(dateMenager.isDateCorrect(sdate1) == false) {
         cout << "Podano niepoprawna date. Sproboj ponownie." << endl;
+        system("pause");
         return;
     }
-    date1 = SupportMethods::convertDateFromStringToInt(sdate1);
+    date1 = dateMenager.convertDateFromStringToInt(sdate1);
 
     cout << "Podaj do jakiej daty ma byc wyswietlony bilans: (RRRR-MM-DD)" << endl;
     sdate2 = SupportMethods::inputLine();
 
-    if(SupportMethods::isDateCorrect(sdate2) == false) {
+    if(dateMenager.isDateCorrect(sdate2) == false) {
         cout << "Podano niepoprawna date. Sproboj ponownie." << endl;
+        system("pause");
         return;
     }
-    date2 = SupportMethods::convertDateFromStringToInt(sdate2);
+    date2 = dateMenager.convertDateFromStringToInt(sdate2);
 
     if(date1 > date2) {
         cout << "Pierwsza data jest wieksza od drugiej. Sprobuj ponownie." << endl;
+        system("pause");
              return;
     }
+
+    system("cls");
 
     outputBudget(date1, date2);
 

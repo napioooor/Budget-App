@@ -3,6 +3,8 @@
 void IncomeFile::addIncomeToFile(BudgetEntry income){
     CMarkup file;
     bool fileExists = file.Load(getFileName());
+    string amount = to_string(income.getAmount());
+    amount.erase(amount.length() - 4, 4);
 
     if (!fileExists) {
         file.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
@@ -17,7 +19,7 @@ void IncomeFile::addIncomeToFile(BudgetEntry income){
     file.AddElem("EntryID", income.getIncomeId());
     file.AddElem("Date", income.getDate());
     file.AddElem("Item", income.getItem());
-    file.AddElem("Amount", to_string(income.getAmount()));
+    file.AddElem("Amount", amount);
     file.OutOfElem();
 
     file.Save(getFileName());
@@ -26,8 +28,13 @@ void IncomeFile::addIncomeToFile(BudgetEntry income){
 int IncomeFile::loadEntriesFromFile(vector <BudgetEntry> &incomes, int loggedInUserId){
     BudgetEntry income;
     CMarkup file;
+    int lastId = 0;
 
     file.Load(getFileName());
+
+    if(file.Load(getFileName()) == false)
+        return lastId;
+
     file.FindElem();
     file.IntoElem();
     while(file.FindElem("Entry")) {
@@ -35,6 +42,8 @@ int IncomeFile::loadEntriesFromFile(vector <BudgetEntry> &incomes, int loggedInU
         file.FindElem("UserID");
 
         if(atoi( MCD_2PCSZ(file.GetData())) != loggedInUserId){
+            file.FindElem("EntryID");
+            lastId = atoi( MCD_2PCSZ(file.GetData()));
             file.OutOfElem();
             continue;
         }
@@ -53,7 +62,9 @@ int IncomeFile::loadEntriesFromFile(vector <BudgetEntry> &incomes, int loggedInU
     }
 
     if(incomes.empty() == true)
-        return 0;
-    else
+        return lastId;
+    else if(incomes[incomes.size() - 1].getIncomeId() > lastId)
         return incomes[incomes.size() - 1].getIncomeId();
+    else
+        return lastId;
 }
